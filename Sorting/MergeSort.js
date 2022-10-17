@@ -1,20 +1,37 @@
-function mergeSort() {}
+function mergeSort(arr) {
+  if (arr.length <= 1) return arr;
+  const mid = Math.floor(arr.length / 2);
+  const left = mergeSort(arr.slice(0, mid));
+  const right = mergeSort(arr.slice(mid));
+  return merge(left, right);
+}
 
-function mergeSortedArrays(arr1, arr2) {
+function merge(arr1, arr2) {
   let i = 0;
   let j = 0;
   let result = [];
 
-  for (let index = 0; index < arr1.length + arr2.length; index++) {
-    if (arr1[i] < arr2[j] && i < arr1.length) {
+  while (i < arr1.length && j < arr2.length) {
+    if (arr1[i] < arr2[j]) {
       result.push(arr1[i]);
       i++;
-    } else if (arr1[i] > arr2[j] && j < arr2.length) {
+    } else {
       result.push(arr2[j]);
       j++;
     }
   }
+
+  while (i < arr1.length) {
+    result.push(arr1[i]);
+    i++;
+  }
+
+  while (j < arr2.length) {
+    result.push(arr2[j]);
+    j++;
+  }
+
   return result;
 }
 
-console.log(mergeSortedArrays([1, 10, 12, 34], [2, 8, 11, 22, 31]));
+console.log(mergeSort([12, 34, 3, 1, 36, 7, 2, 4, 4]));
